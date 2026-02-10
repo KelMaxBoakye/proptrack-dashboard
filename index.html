@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PropTrack - Real Estate Agency Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>PropTrack - Premium Real Estate Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
@@ -14,42 +14,135 @@
         }
 
         :root {
-            --navy: #0A1929;
-            --navy-light: #132F4C;
-            --gold: #D4AF37;
-            --gold-light: #F4E4BC;
-            --white: #FFFFFF;
-            --grey: #8B94A5;
-            --grey-light: #E8EDF3;
-            --success: #10B981;
-            --warning: #F59E0B;
-            --danger: #EF4444;
+            --bg-primary: #000000;
+            --bg-secondary: #0A0A0A;
+            --bg-card: rgba(15, 15, 15, 0.8);
+            --border-color: rgba(99, 102, 241, 0.15);
+            --text-primary: #FFFFFF;
+            --text-secondary: #9CA3AF;
+            --accent-blue: #6366F1;
+            --accent-green: #10B981;
+            --accent-purple: #8B5CF6;
+            --accent-cyan: #06B6D4;
         }
 
         body {
-            font-family: 'DM Sans', sans-serif;
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+            color: var(--text-primary);
             min-height: 100vh;
-            padding: 20px;
+            position: relative;
             overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            animation: fadeIn 0.8s ease-out;
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 280px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border-color);
+            padding: 32px 24px;
+            z-index: 100;
+            transition: transform 0.3s;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 48px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .logo-text h1 {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .logo-text p {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 8px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--text-primary);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(90deg, rgba(99, 102, 241, 0.2) 0%, transparent 100%);
+            border-left: 3px solid var(--accent-blue);
+            padding-left: 13px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 32px;
         }
 
         /* Header */
@@ -58,145 +151,67 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 40px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            animation: slideDown 0.6s ease-out;
         }
 
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .page-title h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
 
-        .logo {
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .header-actions {
             display: flex;
-            align-items: center;
             gap: 12px;
+            align-items: center;
         }
 
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-            border-radius: 12px;
+        .date-selector {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: 900;
-            color: var(--navy);
-            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
-        }
-
-        .logo-text h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 28px;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--white) 0%, var(--gold-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .logo-text p {
-            font-size: 12px;
-            color: var(--grey);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .header-right {
-            display: flex;
-            gap: 16px;
-            align-items: center;
+            gap: 8px;
         }
 
         .demo-badge {
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-            color: var(--navy);
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-cyan) 100%);
+            padding: 10px 20px;
+            border-radius: 10px;
             font-size: 12px;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7);
-            }
-            50% {
-                box-shadow: 0 0 0 10px rgba(212, 175, 55, 0);
-            }
-        }
-
-        .theme-toggle {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: var(--white);
-            padding: 10px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.05);
         }
 
         /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 24px;
-            margin-bottom: 40px;
+            margin-bottom: 32px;
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            padding: 28px;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            padding: 24px;
             border-radius: 16px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
             position: relative;
             overflow: hidden;
             transition: all 0.3s;
-            animation: slideUp 0.6s ease-out backwards;
-        }
-
-        .stat-card:nth-child(1) { animation-delay: 0.1s; }
-        .stat-card:nth-child(2) { animation-delay: 0.2s; }
-        .stat-card:nth-child(3) { animation-delay: 0.3s; }
-        .stat-card:nth-child(4) { animation-delay: 0.4s; }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--gold);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
         }
 
         .stat-card::before {
@@ -204,9 +219,15 @@
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
         .stat-header {
@@ -218,186 +239,267 @@
 
         .stat-label {
             font-size: 13px;
-            color: var(--grey);
+            color: var(--text-secondary);
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         .stat-trend {
             font-size: 12px;
             padding: 4px 10px;
-            border-radius: 12px;
-            font-weight: 700;
+            border-radius: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .trend-up {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success);
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
         }
 
         .trend-down {
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--danger);
+            background: rgba(239, 68, 68, 0.15);
+            color: #EF4444;
         }
 
         .stat-value {
-            font-family: 'Playfair Display', serif;
-            font-size: 42px;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--white) 0%, var(--gold-light) 100%);
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-blue) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 8px;
         }
 
         .stat-sublabel {
             font-size: 13px;
-            color: var(--grey);
+            color: var(--text-secondary);
         }
 
         /* Charts Section */
-        .charts-section {
+        .charts-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 24px;
-            margin-bottom: 40px;
+            margin-bottom: 32px;
         }
 
         .chart-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            padding: 32px;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            padding: 28px;
             border-radius: 16px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            animation: slideUp 0.6s ease-out 0.5s backwards;
         }
 
         .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 24px;
         }
 
         .chart-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 8px;
+            font-size: 18px;
+            font-weight: 600;
         }
 
         .chart-subtitle {
-            color: var(--grey);
-            font-size: 14px;
+            color: var(--text-secondary);
+            font-size: 13px;
         }
 
-        /* Agents Table */
-        .agents-section {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            padding: 32px;
+        .chart-filters {
+            display: flex;
+            gap: 8px;
+        }
+
+        .filter-btn {
+            padding: 6px 14px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--accent-blue);
+            color: white;
+            border-color: var(--accent-blue);
+        }
+
+        /* Table Section */
+        .table-section {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            padding: 28px;
             border-radius: 16px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            margin-bottom: 40px;
-            animation: slideUp 0.6s ease-out 0.6s backwards;
+            margin-bottom: 32px;
         }
 
-        .section-header {
+        .table-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
 
         .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 28px;
-            font-weight: 700;
+            font-size: 20px;
+            font-weight: 600;
         }
 
-        .agents-grid {
-            display: grid;
-            gap: 16px;
+        .table-actions {
+            display: flex;
+            gap: 12px;
         }
 
-        .agent-card {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 20px;
-            border-radius: 12px;
+        .btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .transactions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .transaction-item {
             display: grid;
             grid-template-columns: auto 1fr auto auto auto;
             gap: 20px;
             align-items: center;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             transition: all 0.3s;
-            border: 1px solid transparent;
         }
 
-        .agent-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(212, 175, 55, 0.3);
-            transform: translateX(5px);
+        .transaction-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .transaction-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .agent-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .agent-avatar {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 900;
-            font-size: 18px;
-            color: var(--navy);
+            font-weight: 700;
+            font-size: 14px;
         }
 
-        .agent-info h4 {
-            font-weight: 700;
+        .agent-details h4 {
+            font-size: 14px;
+            font-weight: 600;
             margin-bottom: 4px;
         }
 
-        .agent-info p {
-            font-size: 13px;
-            color: var(--grey);
+        .agent-details p {
+            font-size: 12px;
+            color: var(--text-secondary);
         }
 
-        .agent-stat {
-            text-align: center;
-        }
-
-        .agent-stat-value {
-            font-family: 'Playfair Display', serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--gold);
-        }
-
-        .agent-stat-label {
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
             font-size: 11px;
-            color: var(--grey);
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.15);
+            color: #F59E0B;
+        }
+
+        .transaction-value {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .menu-dots {
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 18px;
         }
 
         /* CTA Section */
         .cta-section {
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-            padding: 60px;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            padding: 48px;
             border-radius: 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            animation: slideUp 0.6s ease-out 0.7s backwards;
         }
 
         .cta-section::before {
             content: '';
             position: absolute;
             top: -50%;
-            right: -50%;
+            left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            animation: rotate 15s linear infinite;
         }
 
         @keyframes rotate {
@@ -411,134 +513,226 @@
         }
 
         .cta-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 42px;
-            font-weight: 900;
-            color: var(--navy);
-            margin-bottom: 16px;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .cta-subtitle {
-            font-size: 18px;
-            color: var(--navy-light);
+            font-size: 16px;
+            color: var(--text-secondary);
             margin-bottom: 32px;
-            opacity: 0.8;
         }
 
         .cta-form {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 16px;
-            max-width: 600px;
+            max-width: 900px;
             margin: 0 auto;
-            flex-wrap: wrap;
-            justify-content: center;
         }
 
         .cta-input {
-            flex: 1;
-            min-width: 250px;
-            padding: 16px 24px;
-            border: 2px solid var(--navy);
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 500;
-            background: var(--white);
-            color: var(--navy);
+            padding: 14px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 14px;
             outline: none;
             transition: all 0.3s;
         }
 
         .cta-input:focus {
-            border-color: var(--navy-light);
-            box-shadow: 0 0 0 4px rgba(10, 25, 41, 0.1);
+            border-color: var(--accent-blue);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .cta-input::placeholder {
+            color: var(--text-secondary);
         }
 
         .cta-button {
-            padding: 16px 40px;
-            background: var(--navy);
-            color: var(--white);
+            grid-column: 1 / -1;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+            color: white;
             border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 700;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         .cta-button:hover {
-            background: var(--navy-light);
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(10, 25, 41, 0.3);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
         }
 
         .success-message {
             display: none;
-            background: var(--success);
+            background: var(--accent-green);
             color: white;
-            padding: 16px 24px;
-            border-radius: 12px;
-            margin-top: 20px;
+            padding: 16px;
+            border-radius: 10px;
+            margin-top: 16px;
             font-weight: 600;
         }
 
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 200;
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
         /* Responsive */
-        @media (max-width: 968px) {
-            .charts-section {
+        @media (max-width: 1024px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+
+            .stats-grid {
                 grid-template-columns: 1fr;
             }
 
-            .agent-card {
+            .transaction-item {
                 grid-template-columns: auto 1fr;
                 gap: 12px;
             }
 
-            .agent-stat {
-                grid-column: 1 / -1;
-                display: flex;
-                justify-content: space-around;
-                margin-top: 12px;
-                padding-top: 12px;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-            }
-        }
-
-        @media (max-width: 640px) {
-            .header {
-                flex-direction: column;
-                gap: 20px;
-                text-align: center;
+            .transaction-checkbox {
+                grid-column: 1;
+                grid-row: 1;
             }
 
-            .cta-title {
-                font-size: 32px;
+            .agent-info {
+                grid-column: 2;
+                grid-row: 1;
+            }
+
+            .status-badge,
+            .transaction-value,
+            .menu-dots {
+                grid-column: 2;
             }
 
             .cta-form {
-                flex-direction: column;
+                grid-template-columns: 1fr;
             }
 
-            .cta-input {
-                min-width: 100%;
+            .cta-title {
+                font-size: 28px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- Menu Toggle -->
+    <div class="menu-toggle" onclick="toggleSidebar()">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18"/>
+        </svg>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">
+            <div class="logo-icon">PT</div>
+            <div class="logo-text">
+                <h1>PropTrack</h1>
+                <p>Dashboard</p>
+            </div>
+        </div>
+
+        <nav>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active">
+                        <span>📊</span> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <span>📈</span> Analytics
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <span>🏢</span> Properties
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <span>👥</span> Agents
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <span>📧</span> Messages
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <span>⚙️</span> Settings
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
         <!-- Header -->
         <header class="header">
-            <div class="logo">
-                <div class="logo-icon">PT</div>
-                <div class="logo-text">
-                    <h1>PropTrack</h1>
-                    <p>Agency Dashboard</p>
-                </div>
+            <div class="page-title">
+                <h2>Dashboard Overview</h2>
+                <p class="page-subtitle">Welcome back! Here's what's happening with your agency today.</p>
             </div>
-            <div class="header-right">
-                <span class="demo-badge">Live Demo</span>
-                <button class="theme-toggle" onclick="toggleTheme()">☀️ Light</button>
+            <div class="header-actions">
+                <div class="date-selector">
+                    📅 1 Mar 2026
+                </div>
+                <div class="demo-badge">Live Demo</div>
             </div>
         </header>
 
@@ -546,165 +740,138 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-header">
-                    <span class="stat-label">Monthly Revenue</span>
-                    <span class="stat-trend trend-up">↑ 23%</span>
+                    <span class="stat-label">Total Revenue</span>
+                    <span class="stat-trend trend-up">↑ 28%</span>
                 </div>
-                <div class="stat-value">GH₵ 485K</div>
-                <div class="stat-sublabel">January 2026 • Target: GH₵ 520K</div>
+                <div class="stat-value">GH₵ 9.8M</div>
+                <div class="stat-sublabel">Properties: Growth from previous month</div>
             </div>
 
             <div class="stat-card">
                 <div class="stat-header">
-                    <span class="stat-label">Active Listings</span>
-                    <span class="stat-trend trend-up">↑ 12%</span>
+                    <span class="stat-label">Property View</span>
+                    <span class="stat-trend trend-up">↑ 20%</span>
                 </div>
-                <div class="stat-value">127</div>
-                <div class="stat-sublabel">67 Accra • 42 Kumasi • 18 Takoradi</div>
+                <div class="stat-value">98,360</div>
+                <div class="stat-sublabel">Properties: Growth from previous month</div>
             </div>
 
             <div class="stat-card">
                 <div class="stat-header">
-                    <span class="stat-label">Sales This Week</span>
-                    <span class="stat-trend trend-up">↑ 8%</span>
+                    <span class="stat-label">Asset Value</span>
+                    <span class="stat-trend trend-up">↑ 50%</span>
                 </div>
-                <div class="stat-value">18</div>
-                <div class="stat-sublabel">Conversion Rate: 34% • Avg: GH₵ 285K</div>
+                <div class="stat-value">98,360</div>
+                <div class="stat-sublabel">Properties: Growth from previous month</div>
             </div>
 
             <div class="stat-card">
                 <div class="stat-header">
-                    <span class="stat-label">Active Agents</span>
-                    <span class="stat-trend trend-down">↓ 2%</span>
+                    <span class="stat-label">Property Sold</span>
+                    <span class="stat-trend trend-down">↓ 20%</span>
                 </div>
-                <div class="stat-value">24</div>
-                <div class="stat-sublabel">Top Performer: Akosua Mensah</div>
+                <div class="stat-value">98,360</div>
+                <div class="stat-sublabel">Properties: Growth from previous month</div>
             </div>
         </div>
 
         <!-- Charts Section -->
-        <div class="charts-section">
+        <div class="charts-grid">
             <div class="chart-card">
                 <div class="chart-header">
-                    <h3 class="chart-title">Sales Performance</h3>
-                    <p class="chart-subtitle">Last 6 months comparison</p>
+                    <div>
+                        <h3 class="chart-title">Revenue Generation</h3>
+                        <p class="chart-subtitle">Last 6 months performance</p>
+                    </div>
+                    <div class="chart-filters">
+                        <button class="filter-btn active">Deals</button>
+                        <button class="filter-btn">Deal Value</button>
+                    </div>
                 </div>
-                <canvas id="salesChart"></canvas>
+                <canvas id="revenueChart" height="250"></canvas>
             </div>
 
             <div class="chart-card">
                 <div class="chart-header">
-                    <h3 class="chart-title">Property Types</h3>
-                    <p class="chart-subtitle">Current portfolio</p>
+                    <div>
+                        <h3 class="chart-title">Active Users</h3>
+                        <p class="chart-subtitle">Weekly activity</p>
+                    </div>
                 </div>
-                <canvas id="propertyChart"></canvas>
+                <canvas id="usersChart" height="250"></canvas>
             </div>
         </div>
 
-        <!-- Top Agents -->
-        <div class="agents-section">
-            <div class="section-header">
-                <h2 class="section-title">Top Performing Agents</h2>
+        <!-- Transactions Table -->
+        <div class="table-section">
+            <div class="table-header">
+                <h3 class="section-title">Recent Transactions</h3>
+                <div class="table-actions">
+                    <button class="btn btn-secondary">🔍 Filter</button>
+                    <button class="btn btn-primary">+ Create New</button>
+                </div>
             </div>
-            <div class="agents-grid">
-                <div class="agent-card">
-                    <div class="agent-avatar">AM</div>
+
+            <div class="transactions-list">
+                <div class="transaction-item">
+                    <div class="transaction-checkbox"></div>
                     <div class="agent-info">
-                        <h4>Akosua Mensah</h4>
-                        <p>East Legon • 3 years</p>
+                        <div class="agent-avatar">FM</div>
+                        <div class="agent-details">
+                            <h4>Fiord Miles</h4>
+                            <p>East Legon • Agent</p>
+                        </div>
                     </div>
-                    <div class="agent-stat">
-                        <div class="agent-stat-value">12</div>
-                        <div class="agent-stat-label">Sales</div>
-                    </div>
-                    <div class="agent-stat">
-                        <div class="agent-stat-value">GH₵ 3.2M</div>
-                        <div class="agent-stat-label">Revenue</div>
-                    </div>
-                    <div class="agent-stat">
-                        <div class="agent-stat-value">42%</div>
-                        <div class="agent-stat-label">Conv. Rate</div>
-                    </div>
+                    <span class="status-badge status-active">Completed</span>
+                    <span class="transaction-value">GH₵ 680K</span>
+                    <span class="menu-dots">⋮</span>
                 </div>
 
-                <div class="agent-card">
-                    <div class="agent-avatar">KA</div>
+                <div class="transaction-item">
+                    <div class="transaction-checkbox"></div>
                     <div class="agent-info">
-                        <h4>Kwame Asante</h4>
-                        <p>Cantonments • 5 years</p>
+                        <div class="agent-avatar">DS</div>
+                        <div class="agent-details">
+                            <h4>Darrell Steward</h4>
+                            <p>Cantonments • Lead</p>
+                        </div>
                     </div>
-                    <div class="agent-stat">
-                        <div class="agent-stat-value">10</div>
-                        <div class="agent-stat-label">Sales</div>
-                    </div>
-                    <div class="agent-stat">
-                        <div class="agent-stat-value">GH₵ 2.8M</div>
-                        <div class="agent-stat-label">Revenue</div>
-                    </div>
-                    <div class="agent-stat">
-                        <div class="agent-stat-value">38%</div>
-                        <div class="agent-stat-label">Conv. Rate</div>
-                    </div>
+                    <span class="status-badge status-pending">Pending</span>
+                    <span class="transaction-value">GH₵ 580K</span>
+                    <span class="menu-dots">⋮</span>
                 </div>
 
-                <div class="agent-card">
-                    <div class="agent-avatar">ED</div>
+                <div class="transaction-item">
+                    <div class="transaction-checkbox"></div>
                     <div class="agent-info">
-                        <h4>Efua Darko</h4>
-                        <p>Airport Residential • 2 years</p>
+                        <div class="agent-avatar">CF</div>
+                        <div class="agent-details">
+                            <h4>Cody Fisher</h4>
+                            <p>Airport Residential • Agent</p>
+                        </div>
                     </div>
-                    <div class="agent-stat">
-                        <div class="agent-stat-value">9</div>
-                        <div class="agent-stat-label">Sales</div>
-                    </div>
-                    <div class="agent-stat">
-                        <div class="agent-stat-value">GH₵ 2.5M</div>
-                        <div class="agent-stat-label">Revenue</div>
-                    </div>
-                    <div class="agent-stat">
-                        <div class="agent-stat-value">36%</div>
-                        <div class="agent-stat-label">Conv. Rate</div>
-                    </div>
+                    <span class="status-badge status-active">Completed</span>
+                    <span class="transaction-value">GH₵ 820K</span>
+                    <span class="menu-dots">⋮</span>
                 </div>
 
-                <div class="agent-card">
-                    <div class="agent-avatar">YO</div>
+                <div class="transaction-item">
+                    <div class="transaction-checkbox"></div>
                     <div class="agent-info">
-                        <h4>Yaw Osei</h4>
-                        <p>Labone • 4 years</p>
+                        <div class="agent-avatar">AB</div>
+                        <div class="agent-details">
+                            <h4>Annette Black</h4>
+                            <p>Labone • Manager</p>
+                        </div>
                     </div>
-                    <div class="agent-stat">
-                        <div class="agent-stat-value">8</div>
-                        <div class="agent-stat-label">Sales</div>
-                    </div>
-                    <div class="agent-stat">
-                        <div class="agent-stat-value">GH₵ 2.2M</div>
-                        <div class="agent-stat-label">Revenue</div>
-                    </div>
-                    <div class="agent-stat">
-                        <div class="agent-stat-value">34%</div>
-                        <div class="agent-stat-label">Conv. Rate</div>
-                    </div>
+                    <span class="status-badge status-active">Completed</span>
+                    <span class="transaction-value">GH₵ 650K</span>
+                    <span class="menu-dots">⋮</span>
                 </div>
+            </div>
 
-                <div class="agent-card">
-                    <div class="agent-avatar">AB</div>
-                    <div class="agent-info">
-                        <h4>Ama Boateng</h4>
-                        <p>Dzorwulu • 1 year</p>
-                    </div>
-                    <div class="agent-stat">
-                        <div class="agent-stat-value">7</div>
-                        <div class="agent-stat-label">Sales</div>
-                    </div>
-                    <div class="agent-stat">
-                        <div class="agent-stat-value">GH₵ 1.9M</div>
-                        <div class="agent-stat-label">Revenue</div>
-                    </div>
-                    <div class="agent-stat">
-                        <div class="agent-stat-value">31%</div>
-                        <div class="agent-stat-label">Conv. Rate</div>
-                    </div>
-                </div>
+            <div style="margin-top: 24px; text-align: center; color: var(--text-secondary); font-size: 13px;">
+                Show result 10 out of 1000
             </div>
         </div>
 
@@ -717,40 +884,44 @@
                     <input type="text" class="cta-input" placeholder="Your Name" required>
                     <input type="email" class="cta-input" placeholder="Agency Email" required>
                     <input type="tel" class="cta-input" placeholder="Phone Number" required>
-                    <button type="submit" class="cta-button">Request Demo</button>
+                    <button type="submit" class="cta-button">Request Free Demo</button>
                 </form>
                 <div class="success-message" id="successMessage">
                     ✅ Thank you! We'll contact you within 24 hours to schedule your demo.
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <script>
-        // Sales Chart
-        const salesCtx = document.getElementById('salesChart').getContext('2d');
-        new Chart(salesCtx, {
+        // Revenue Chart
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        const gradient = revenueCtx.createLinearGradient(0, 0, 0, 300);
+        gradient.addColorStop(0, 'rgba(99, 102, 241, 0.4)');
+        gradient.addColorStop(1, 'rgba(99, 102, 241, 0)');
+
+        new Chart(revenueCtx, {
             type: 'line',
             data: {
-                labels: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'],
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
                 datasets: [{
-                    label: 'Sales (GH₵)',
-                    data: [320000, 380000, 420000, 390000, 445000, 485000],
-                    borderColor: '#D4AF37',
-                    backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                    label: 'Revenue',
+                    data: [20, 40, 30, 50, 45, 60, 70, 65],
+                    borderColor: '#6366F1',
+                    backgroundColor: gradient,
                     borderWidth: 3,
                     fill: true,
                     tension: 0.4,
-                    pointBackgroundColor: '#D4AF37',
+                    pointBackgroundColor: '#6366F1',
                     pointBorderColor: '#fff',
                     pointBorderWidth: 2,
-                    pointRadius: 6,
-                    pointHoverRadius: 8
+                    pointRadius: 5,
+                    pointHoverRadius: 7
                 }]
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         display: false
@@ -759,57 +930,81 @@
                 scales: {
                     y: {
                         beginAtZero: true,
-                        ticks: {
-                            color: '#8B94A5',
-                            callback: function(value) {
-                                return 'GH₵ ' + (value / 1000) + 'K';
-                            }
-                        },
                         grid: {
-                            color: 'rgba(139, 148, 165, 0.1)'
+                            color: 'rgba(99, 102, 241, 0.1)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: '#9CA3AF',
+                            font: {
+                                size: 12
+                            }
                         }
                     },
                     x: {
-                        ticks: {
-                            color: '#8B94A5'
-                        },
                         grid: {
                             display: false
+                        },
+                        ticks: {
+                            color: '#9CA3AF',
+                            font: {
+                                size: 12
+                            }
                         }
                     }
                 }
             }
         });
 
-        // Property Types Chart
-        const propertyCtx = document.getElementById('propertyChart').getContext('2d');
-        new Chart(propertyCtx, {
-            type: 'doughnut',
+        // Users Chart
+        const usersCtx = document.getElementById('usersChart').getContext('2d');
+        new Chart(usersCtx, {
+            type: 'bar',
             data: {
-                labels: ['Apartments', 'Houses', 'Land', 'Commercial'],
+                labels: ['Sun', 'Mon', 'Tue', 'Wed'],
                 datasets: [{
-                    data: [45, 32, 15, 8],
+                    label: 'Active Users',
+                    data: [40, 60, 80, 50],
                     backgroundColor: [
-                        '#D4AF37',
-                        '#F4E4BC',
-                        '#10B981',
-                        '#8B94A5'
+                        'rgba(99, 102, 241, 0.8)',
+                        'rgba(99, 102, 241, 0.8)',
+                        'rgba(99, 102, 241, 1)',
+                        'rgba(99, 102, 241, 0.6)'
                     ],
-                    borderWidth: 0
+                    borderRadius: 8,
+                    borderSkipped: false
                 }]
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        position: 'bottom',
-                        labels: {
-                            color: '#8B94A5',
-                            padding: 20,
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(99, 102, 241, 0.1)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: '#9CA3AF',
                             font: {
-                                size: 13,
-                                weight: '600'
+                                size: 11
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#9CA3AF',
+                            font: {
+                                size: 11
                             }
                         }
                     }
@@ -817,7 +1012,12 @@
             }
         });
 
-        // Form Submission
+        // Toggle Sidebar
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        // Form Submit
         function handleSubmit(event) {
             event.preventDefault();
             const successMessage = document.getElementById('successMessage');
@@ -827,26 +1027,6 @@
             setTimeout(() => {
                 successMessage.style.display = 'none';
             }, 5000);
-        }
-
-        // Theme Toggle
-        let isDark = true;
-        function toggleTheme() {
-            isDark = !isDark;
-            const body = document.body;
-            const button = document.querySelector('.theme-toggle');
-            
-            if (isDark) {
-                body.style.background = 'linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%)';
-                button.textContent = '☀️ Light';
-            } else {
-                body.style.background = 'linear-gradient(135deg, #F0F4F8 0%, #E8EDF3 100%)';
-                button.textContent = '🌙 Dark';
-                // Update text colors for light mode
-                document.querySelectorAll('.stat-card, .chart-card, .agents-section').forEach(el => {
-                    el.style.color = '#0A1929';
-                });
-            }
         }
     </script>
 </body>
