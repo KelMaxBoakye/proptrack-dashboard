@@ -788,7 +788,7 @@
                         <button class="filter-btn">Deal Value</button>
                     </div>
                 </div>
-                <canvas id="revenueChart" height="250"></canvas>
+                <canvas id="revenueChart" height="80"></canvas>
             </div>
 
             <div class="chart-card">
@@ -798,7 +798,7 @@
                         <p class="chart-subtitle">Weekly activity</p>
                     </div>
                 </div>
-                <canvas id="usersChart" height="250"></canvas>
+                <canvas id="usersChart" height="80"></canvas>
             </div>
         </div>
 
@@ -921,7 +921,8 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
+                aspectRatio: 3,
                 plugins: {
                     legend: {
                         display: false
@@ -977,7 +978,8 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
+                maintainAspectRatio: true,
+                aspectRatio: 1.2,
                 plugins: {
                     legend: {
                         display: false
@@ -1016,6 +1018,17 @@
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('active');
         }
+
+        // Prevent default link behavior (stops jumping)
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Remove active from all
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                // Add active to clicked
+                e.currentTarget.classList.add('active');
+            });
+        });
 
         // Form Submit
         function handleSubmit(event) {
