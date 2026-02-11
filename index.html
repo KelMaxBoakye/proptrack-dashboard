@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PropTrack - Premium Real Estate Dashboard</title>
+    <title>Vantage - Premium Real Estate Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -584,6 +584,90 @@
             font-weight: 600;
         }
 
+        /* Coming Soon Banner */
+        .coming-soon-banner {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            padding: 32px;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .coming-soon-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue) 0%, var(--accent-purple) 50%, var(--accent-cyan) 100%);
+        }
+
+        .coming-soon-content {
+            text-align: center;
+        }
+
+        .coming-soon-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+        }
+
+        .coming-soon-features {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .feature-item:hover {
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            font-size: 24px;
+        }
+
+        .feature-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 768px) {
+            .coming-soon-features {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .feature-item {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
         /* Mobile Menu Toggle */
         .menu-toggle {
             display: none;
@@ -677,9 +761,9 @@
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="logo">
-            <div class="logo-icon">PT</div>
+            <div class="logo-icon">V</div>
             <div class="logo-text">
-                <h1>PropTrack</h1>
+                <h1>Vantage</h1>
                 <p>Dashboard</p>
             </div>
         </div>
@@ -875,11 +959,32 @@
             </div>
         </div>
 
+        <!-- Coming Soon Banner -->
+        <div class="coming-soon-banner">
+            <div class="coming-soon-content">
+                <div class="coming-soon-badge">🚀 Coming Soon</div>
+                <div class="coming-soon-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">💬</span>
+                        <span class="feature-name">WhatsApp Integration</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">💰</span>
+                        <span class="feature-name">Commission Calculator</span>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">⚠️</span>
+                        <span class="feature-name">Leakage Reports</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- CTA Section -->
         <div class="cta-section">
             <div class="cta-content">
                 <h2 class="cta-title">Ready to Transform Your Agency?</h2>
-                <p class="cta-subtitle">Join leading real estate agencies across Ghana already using PropTrack</p>
+                <p class="cta-subtitle">Join leading real estate agencies across Ghana already using Vantage</p>
                 <form class="cta-form" onsubmit="handleSubmit(event)">
                     <input type="text" class="cta-input" placeholder="Your Name" required>
                     <input type="email" class="cta-input" placeholder="Agency Email" required>
@@ -959,6 +1064,7 @@
 
         // Users Chart
         const usersCtx = document.getElementById('usersChart').getContext('2d');
+        
         new Chart(usersCtx, {
             type: 'bar',
             data: {
