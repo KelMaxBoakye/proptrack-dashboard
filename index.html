@@ -26,13 +26,23 @@
             --accent-cyan: #06B6D4;
         }
 
+        [data-theme="light"] {
+            --bg-primary: #F8FAFC;
+            --bg-secondary: #FFFFFF;
+            --bg-card: rgba(255, 255, 255, 0.9);
+            --border-color: rgba(99, 102, 241, 0.2);
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+            background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         /* Animated background */
@@ -65,12 +75,12 @@
             top: 0;
             height: 100vh;
             width: 280px;
-            background: rgba(10, 10, 10, 0.95);
+            background: var(--bg-card);
             backdrop-filter: blur(20px);
             border-right: 1px solid var(--border-color);
             padding: 32px 24px;
             z-index: 100;
-            transition: transform 0.3s;
+            transition: transform 0.3s, background 0.3s ease;
         }
 
         .logo {
@@ -193,6 +203,26 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+
+        .theme-toggle {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(99, 102, 241, 0.15);
+            transform: scale(1.05);
         }
 
         /* Stats Grid */
@@ -817,6 +847,10 @@
                     📅 1 Mar 2026
                 </div>
                 <div class="demo-badge">Live Demo</div>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <span id="theme-icon">☀️</span>
+                    <span id="theme-text">Light</span>
+                </button>
             </div>
         </header>
 
@@ -1120,10 +1154,43 @@
             }
         });
 
+        // Toggle Theme
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+            
+            if (currentTheme === 'light') {
+                html.removeAttribute('data-theme');
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
         // Toggle Sidebar
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('active');
         }
+
+        // Load saved theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+            
+            if (savedTheme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+            }
+        });
 
         // Prevent default link behavior (stops jumping)
         document.querySelectorAll('.nav-link').forEach(link => {
